@@ -1,7 +1,7 @@
 <template>
   <v-app>
    <v-toolbar>
-     <v-menu offset-y>
+     <v-menu offset-y v-if='loggedIn'>
       <v-btn primary flat slot="activator"><v-icon left>developer_board</v-icon> Boards</v-btn>
       <v-list>
         <v-list-tile v-for="item in items" :key="item.title">
@@ -12,7 +12,7 @@
     <v-spacer></v-spacer>
     <v-toolbar-title v-text="title"></v-toolbar-title>
     <v-spacer></v-spacer>
-    <div>
+    <div v-if='!loggedIn'>
       <router-link to="/register" tag="span"><v-btn flat>Register</v-btn></router-link>
     </div>
 
@@ -30,17 +30,24 @@
   export default {
     data () {
       return {
-        items: [
-          { icon: 'bubble_chart', title: 'Inspire' },
-          { icon: 'bubble_chart', title: 'Inspire' },
-          { icon: 'bubble_chart', title: 'Inspire' },
-          { icon: 'bubble_chart', title: 'Another board' },
-        ],
-        title: 'Webllo'
+        items: '',
+        title: 'Webllo',
+        loggedIn:false
       }
     },
-    mounted () {
-      // axios.get('http://weblloapi.dev/boards');
+    created () {
+      Event.$on('login',()=>{
+        this.loggedIn=true;
+      });
+
+       Event.$on('logout',()=>{
+            this.loggedIn=false;
+          });
+
+        let token = localStorage.getItem('token');
+        if(token) {
+          this.loggedIn=true;
+        }
     }
   }
 </script>

@@ -50,6 +50,8 @@
 
 					localStorage.setItem('token',token);
 
+					Event.$emit('login');
+
 					this.$router.push('/');
 				});
 			}
