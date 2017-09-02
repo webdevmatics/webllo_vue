@@ -4,8 +4,8 @@
      <v-menu offset-y v-if='loggedIn'>
       <v-btn primary flat slot="activator"><v-icon left>developer_board</v-icon> Boards</v-btn>
       <v-list>
-        <v-list-tile v-for="item in items" :key="item.title">
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+        <v-list-tile v-for="item in boards" :key="item.id">
+          <v-list-tile-title>{{ item.name }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
@@ -30,7 +30,7 @@
   export default {
     data () {
       return {
-        items: '',
+        boards: '',
         title: 'Webllo',
         loggedIn:false
       }
@@ -44,12 +44,13 @@
             this.loggedIn=false;
           });
 
+       Event.$on('boardsLoaded',($boards)=>{this.boards=$boards});
         let token = localStorage.getItem('token');
         if(token) {
           this.loggedIn=true;
         }
     }
-  }
+   }
 </script>
 
 <style lang="stylus">

@@ -40,6 +40,7 @@
 			.then(response => {
 				console.log(response);
 				this.boards=response.data.boards;
+				Event.$emit('boardsLoaded',this.boards);
 			});
 		}
 
