@@ -6,7 +6,7 @@
 
 			<v-container grid-list-md fluid>
 					<v-layout row>
-						<v-flex md3 v-for="i in 4">
+						<v-flex md3 v-for="i in 6">
 							<v-card  class="grey lighten-2">
 								 <v-toolbar class="green white--text" dark dense>
 							          <v-toolbar-title>Backlog</v-toolbar-title>
@@ -27,8 +27,21 @@
 
 							            </v-list-tile-content>
 							          </v-list-tile>
+
+							          <v-list-tile>
+							          	<a href="#">Add link</a>
+							          </v-list-tile>
 						        </v-list>
 
+							</v-card>
+						</v-flex>
+
+						<v-flex md3>
+							<v-card>
+								<v-card-title class='grey lighten-1'>
+									<v-btn flat small class="primary">Add a list ...</v-btn>
+									
+								</v-card-title>
 							</v-card>
 						</v-flex>
 						
