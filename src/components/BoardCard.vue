@@ -33,7 +33,6 @@
 	},
 
 	created(){
-		console.log(this.list);
 		this.cards=this.list.cards;
 	}
 		

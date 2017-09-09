@@ -4,13 +4,13 @@
      <v-menu offset-y v-if='loggedIn'>
       <v-btn primary flat slot="activator"><v-icon left>developer_board</v-icon> Boards</v-btn>
       <v-list>
-        <v-list-tile v-for="board in boards" :key="board.id">
+        <div v-for="board in boards" :key="board.id">
             
-            <router-link :to ="{name:'SingleBoard',params:{id:board.id}}">
-               {{board.name}}
+            <router-link :to ="{name:'SingleBoard',params:{id:board.id}}" tag='v-list-tile' >
+               {{board.name}} 
             </router-link>
 
-        </v-list-tile>
+        </div>
       </v-list>
     </v-menu>
     <v-spacer></v-spacer>
@@ -24,9 +24,7 @@
     <v-menu offset-y v-if='loggedIn'>
       <v-btn primary flat slot="activator"><v-icon left>developer_board</v-icon> {{user.username}}</v-btn>
       <v-list>
-        <v-list-tile >
-          <router-link to="/logout" tag="span">Logout</router-link>
-        </v-list-tile>
+          <router-link to="/logout" tag='v-list-tile'>Logout</router-link>
       </v-list>
       </v-menu>
 

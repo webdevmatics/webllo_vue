@@ -57,7 +57,11 @@ import BoardCard from '@/components/BoardCard'
 			this.fetchBoardsData();
 
 		},
-
+		beforeRouteUpdate (to,from,next){
+			this.boardId=to.params.id;
+			this.fetchBoardsData();
+			next();
+		},
 		methods:{
 			getLists(){
 				this.boards.map((board)=>{
