@@ -6,7 +6,7 @@ methods:{
       	if(!token){
       		return false;
       	}
-        axios.get("http://weblloapi.dev/boards?api_token="+token)
+        axios.get("/boards")
         .then(response => {
         this.boards=response.data.boards;
 

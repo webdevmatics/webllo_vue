@@ -63,10 +63,6 @@ import boardDataMixin from './mixins/boardDataMixin'
             this.loggedIn=false;
           });
 
-      
-        // this.loggedIn=true;
-
-        // this.fetchUserData();
         if(token){
           this.user= JSON.parse(localStorage.getItem('user'));
           this.loggedIn=true;
@@ -76,15 +72,6 @@ import boardDataMixin from './mixins/boardDataMixin'
     mixins:[boardDataMixin],
 
     methods:{
-
-      fetchUserData () {
-
-        axios.get(baseApiUrl+"users/"+token+"?api_token="+token)
-        .then((response)=>{
-          this.user = response.data.user; 
-        });
-
-      },
 
       redirectGuestToLogin(){
          if (!token) {

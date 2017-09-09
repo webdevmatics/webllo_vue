@@ -14,7 +14,7 @@
 		          </v-list-tile>
 
 		          <v-list-tile>
-		          	<a href="#">Add link</a>
+		          	<a href="#">Add card</a>
 		          </v-list-tile>
 		 </v-list>
 	</div>

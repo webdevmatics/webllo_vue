@@ -2,10 +2,10 @@
 	
 	<div >
 		
-		<h4>Cards for boardId {{boardId}}</h4>
+		<h4>{{board.name}}</h4>
 
 			<v-container grid-list-md fluid>
-					<v-layout row>
+					<v-layout row wrap>
 						<v-flex md3 v-for="list in lists" :key="list.id">
 							<v-card  class="grey lighten-2">
 								 <v-toolbar class="green white--text" dark dense>
@@ -24,7 +24,9 @@
 						<v-flex md3>
 							<v-card>
 								<v-card-title class='grey lighten-1'>
-									<v-btn flat small class="primary">Add a list ...</v-btn>
+
+									<v-text-field v-model="listName" label="List Name" v-if="editMode" @keyup.enter="storeList"></v-text-field>
+									<v-btn flat small class="primary" @click="editMode=true" v-if="!editMode">Add a list ...</v-btn>
 									
 								</v-card-title>
 							</v-card>
@@ -44,9 +46,12 @@ import BoardCard from '@/components/BoardCard'
 		data() {
 			return { 
 				boards:'',
+				board:'',
 				lists:'',
 				cards:'',
 				boardId:'',
+				listName:'',
+				editMode:false
 			
 		}},
 		components:{
@@ -66,13 +71,25 @@ import BoardCard from '@/components/BoardCard'
 			getLists(){
 				this.boards.map((board)=>{
 					if(board.id==this.boardId){
+						this.board=board;
 						return this.lists=board.lists;
 					}	
 				})
 			},
+			storeList(){
+				this.editMode=false;
+				//ajax req to create list
+				axios.post("/boards/"+this.boardId+"/list",{name:this.listName})
+				.then(response=>{
+					let newList=response.data.list;
+					this.lists.push(newList);
+					this.listName='';
+				});
+
+			},
 
 	      fetchBoardsData() {
-	              axios.get("http://weblloapi.dev/boards?api_token="+token)
+	              axios.get("boards")
 	              .then(response => {
 	              this.boards=response.data.boards;
 	              this.getLists();

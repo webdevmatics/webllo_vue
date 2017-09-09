@@ -4,13 +4,17 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 
+window.token=localStorage.getItem('token');
+
 window.axios=axios
+window.axios.defaults.baseURL='http://weblloapi.dev'
+window.axios.defaults.params={api_token:window.token}
+
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 
 window.Event= new Vue;
-window.token=localStorage.getItem('token');
-window.baseApiUrl="http://weblloapi.dev/";
+// window.baseApiUrl="http://weblloapi.dev/";
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
