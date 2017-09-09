@@ -5,6 +5,7 @@
 			<v-flex xs6 offset-xs3>
 				<v-card>
 					<v-card-text>
+					<form @keyup.enter="logItIn">
 						<v-text-field
 						v-model="login.email"
 						label="Email"
@@ -20,6 +21,7 @@
 
 						>
 						</v-text-field>
+					</form>
 					</v-card-text>
 
 					<v-btn class="mb-3" success @click='logItIn'>Login</v-btn>
@@ -47,10 +49,11 @@
 				axios.post('http://weblloapi.dev/login',this.login)
 				.then(response => {
 					let token=response.data.user.api_token;
-
+					window.token=token;
+					let user=response.data.user;	
 					localStorage.setItem('token',token);
-
-					Event.$emit('login');
+					localStorage.setItem('user',JSON.stringify(user));
+					Event.$emit('login',user);
 
 					this.$router.push('/');
 				});

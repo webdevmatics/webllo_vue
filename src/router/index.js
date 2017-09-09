@@ -10,6 +10,7 @@ import SingleBoard from '@/components/SingleBoard'
 
 
 
+
 Vue.use(Router)
 
 export default new Router({

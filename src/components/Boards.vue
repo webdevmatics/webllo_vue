@@ -21,7 +21,9 @@
 
 
 <script>
-	
+
+import boardDataMixin from '../mixins/boardDataMixin'
+
 	export default {
 
 		data() {
@@ -31,18 +33,9 @@
 		},
 
 		mounted () {
-			let token= localStorage.getItem('token');
-			if (!token) {
-				this.$router.push('/login');
-			}
-			console.log(token);
-			axios.get("http://weblloapi.dev/boards?api_token="+token)
-			.then(response => {
-				console.log(response);
-				this.boards=response.data.boards;
-				Event.$emit('boardsLoaded',this.boards);
-			});
-		}
-
+			
+			this.fetchBoardsData();
+		},
+		mixins:[boardDataMixin]
 	}
 </script>

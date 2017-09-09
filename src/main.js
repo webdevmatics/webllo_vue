@@ -9,6 +9,8 @@ Vue.use(Vuetify)
 Vue.config.productionTip = false
 
 window.Event= new Vue;
+window.token=localStorage.getItem('token');
+window.baseApiUrl="http://weblloapi.dev/";
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
