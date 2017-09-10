@@ -48,11 +48,13 @@
 			logItIn(){
 				axios.post('http://weblloapi.dev/login',this.login)
 				.then(response => {
-					let token=response.data.user.api_token;
-					window.token=token;
+					let newToken=response.data.user.api_token;
+					window.token=newToken;
 					let user=response.data.user;	
-					localStorage.setItem('token',token);
+					localStorage.setItem('token',newToken);
 					localStorage.setItem('user',JSON.stringify(user));
+
+					window.axios.defaults.params={api_token:newToken}
 					Event.$emit('login',user);
 
 					this.$router.push('/');

@@ -1,6 +1,6 @@
 <template>
 	
-	<div >
+	<div @click="editMode=false; updateListId=null">
 		
 		<h4>{{board.name}}</h4>
 
@@ -9,11 +9,21 @@
 						<v-flex md3 v-for="list in lists" :key="list.id">
 							<v-card  class="grey lighten-2">
 								 <v-toolbar class="green white--text" dark dense>
-							          <v-toolbar-title>{{list.name}}</v-toolbar-title>
+									<v-text-field v-model="listName" label="List Name" v-if="updateListId==list.id" @keyup.enter="updateList"></v-text-field>
+							          <v-toolbar-title @click.stop="updateListId=list.id" v-else>{{list.name}}</v-toolbar-title>
 							          <v-spacer></v-spacer>
-							          <v-btn icon>
+							          
+									<v-menu offset-y>
+							          <v-btn icon slot="activator">
 							            <v-icon>more_vert</v-icon>
 							          </v-btn>
+
+							          <v-list>
+							          	<v-list-tile @click.stop="deleteList(list.id)">
+							          		Delete
+							          	</v-list-tile>
+							          </v-list>
+							       </v-menu>
 						        </v-toolbar>
 
 							<board-card :list="list"></board-card>
@@ -26,7 +36,7 @@
 								<v-card-title class='grey lighten-1'>
 
 									<v-text-field v-model="listName" label="List Name" v-if="editMode" @keyup.enter="storeList"></v-text-field>
-									<v-btn flat small class="primary" @click="editMode=true" v-if="!editMode">Add a list ...</v-btn>
+									<v-btn flat small class="primary" @click.stop="editMode=true" v-else>Add a list ...</v-btn>
 									
 								</v-card-title>
 							</v-card>
@@ -51,7 +61,8 @@ import BoardCard from '@/components/BoardCard'
 				cards:'',
 				boardId:'',
 				listName:'',
-				editMode:false
+				editMode:false,
+				updateListId: ""
 			
 		}},
 		components:{
@@ -86,6 +97,25 @@ import BoardCard from '@/components/BoardCard'
 					this.listName='';
 				});
 
+			},
+			updateList(){
+				//ajax req to create list
+				axios.put("/boards/"+this.boardId+"/list/"+this.updateListId,{name:this.listName})
+				.then(response=>{
+				console.log(response);
+				this.updateListId=null;
+					this.listName='';
+
+				this.fetchBoardsData();
+				});
+			},
+
+			deleteList(listId) {
+				axios.delete("/boards/"+this.boardId+"/list/"+listId)
+				.then(response=>{
+				console.log(response);
+				this.fetchBoardsData();
+				});
 			},
 
 	      fetchBoardsData() {
