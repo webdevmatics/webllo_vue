@@ -35,7 +35,7 @@
 							<v-card>
 								<v-card-title class='grey lighten-1'>
 
-									<v-text-field v-model="listName" label="List Name" v-if="editMode" @keyup.enter="storeList"></v-text-field>
+									<v-text-field @click.stop v-model="listName" label="List Name" v-if="editMode" @keyup.enter="storeList"></v-text-field>
 									<v-btn flat small class="primary" @click.stop="editMode=true" v-else>Add a list ...</v-btn>
 									
 								</v-card-title>
