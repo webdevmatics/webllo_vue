@@ -3,7 +3,7 @@
 	<div>
 			<v-list class="grey lighten-3">
 
-			<draggable v-model="cards" :options="{group:'cards'}" @add="onAdd" style="min-height: 15px" :listId="list.id">
+			<draggable v-model="cards" :options="{group:'cards'}" @add="onAdd" style="min-height: 15px" :listId="list.id" @change="onChange">
 			       <li v-for="card in cards" :key="card.id" :cardId="card.id">
 				        <v-list-tile avatar >
 				      		<v-list-tile-content>
@@ -79,6 +79,19 @@ import draggable from 'vuedraggable'
 			let toListId= evt.to.getAttribute('listId');
 
 			this.updateCard(cardId,toListId);
+		},
+		onChange(evt){
+			let newCards= this.cards.map((card,index)=>{
+				 card.priority= index+1;
+				return card;
+			});
+
+			axios.patch('/card/update-all',{cards:newCards})
+			.then(response=>{
+				console.log(response);
+			})
+
+
 		}
 	}
 		
